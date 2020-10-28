@@ -49,7 +49,8 @@ class MyEnv(object):
     ) -> Tuple[List[TensorObs], float, List[GymImg]]:
         """reset resets and initializes the underlying gym environment."""
         self.__env.reset()
-        self.__env.seed(self.__new_seed())
+        # FIXME: seems like the wrapper is not compatible with the seed
+        # self.__env.seed(self.__new_seed())
 
         init_reward = 0.
         observations = []

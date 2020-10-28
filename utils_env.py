@@ -7,6 +7,7 @@ from typing import (
 import base64
 from collections import deque
 import pathlib
+import random
 
 from IPython import display as ipydisplay
 import numpy as np
@@ -37,8 +38,10 @@ class MyEnv(object):
         env_raw = make_atari("BreakoutNoFrameskip-v4")
         self.__env = wrap_deepmind(env_raw, episode_life=True)
         self.__device = device
+        self.__rand = random.Random()
         if seed is not None:
-            self.__env.seed(seed)
+            self.__rand.seed(seed)
+        self.__new_seed = lambda: self.__rand.randint(0, 1000_000)
 
     def reset(
             self,
@@ -46,6 +49,7 @@ class MyEnv(object):
     ) -> Tuple[List[TensorObs], float, List[GymImg]]:
         """reset resets and initializes the underlying gym environment."""
         self.__env.reset()
+        self.__env.seed(self.__new_seed())
 
         init_reward = 0.
         observations = []

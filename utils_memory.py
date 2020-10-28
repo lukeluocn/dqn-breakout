@@ -62,13 +62,6 @@ class ReplayMemory(object):
         b_action = self.__m_actions[indices].to(self.__device)
         b_reward = self.__m_rewards[indices].to(self.__device).float()
         b_done = self.__m_dones[indices].to(self.__device).float()
-        print(
-            b_state.shape,
-            b_action.shape,
-            b_reward.shape,
-            b_next.shape,
-            b_done.shape,
-        )
         return b_state, b_action, b_reward, b_next, b_done
 
     def __len__(self) -> int:

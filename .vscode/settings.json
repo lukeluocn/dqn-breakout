@@ -1,0 +1,23 @@
+{
+    "cSpell.words": [
+        "conv",
+        "cuda",
+        "dones",
+        "dtype",
+        "from",
+        "from numpy",
+        "ipydisplay",
+        "kaiming",
+        "mypy",
+        "ncols",
+        "numpy",
+        "optim",
+        "relu",
+        "tqdm",
+        "unsqueeze"
+    ],
+    "python.pythonPath": "/home/luke/anaconda3/envs/drl/bin/python",
+    "python.linting.pylintArgs": [
+        "--generated-members=numpy.* ,torch.*"
+    ]
+}

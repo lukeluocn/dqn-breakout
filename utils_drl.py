@@ -1,3 +1,7 @@
+from typing import (
+    Optional,
+)
+
 import random
 
 import torch
@@ -9,6 +13,7 @@ from utils_types import (
     TorchDevice,
 )
 
+from utils_memory import ReplayMemory
 from utils_model import DQN
 
 
@@ -24,6 +29,8 @@ class Agent(object):
             eps_start: float,
             eps_final: float,
             eps_decay: float,
+
+            restore: Optional[str] = None,
     ) -> None:
         self.__action_dim = action_dim
         self.__device = device
@@ -39,7 +46,10 @@ class Agent(object):
 
         self.__policy = DQN(action_dim, device).to(device)
         self.__target = DQN(action_dim, device).to(device)
-        self.__policy.apply(DQN.init_weights)
+        if restore is None:
+            self.__policy.apply(DQN.init_weights)
+        else:
+            self.__policy.load_state_dict(torch.load(restore))
         self.__target.load_state_dict(self.__policy.state_dict())
         self.__optimizer = optim.Adam(
             self.__policy.parameters(),
@@ -60,7 +70,7 @@ class Agent(object):
                 return self.__policy(state).max(1).indices.item()
         return self.__r.randint(0, self.__action_dim - 1)
 
-    def learn(self, memory, batch_size) -> float:
+    def learn(self, memory: ReplayMemory, batch_size: int) -> float:
         """learn trains the value network via TD-learning."""
         state_batch, action_batch, reward_batch, next_batch, done_batch = \
             memory.sample(batch_size)
@@ -79,7 +89,11 @@ class Agent(object):
 
         return loss.item()
 
-    def sync(self):
+    def sync(self) -> None:
         """sync synchronizes the weights from the policy network to the target
         network."""
         self.__target.load_state_dict(self.__policy.state_dict())
+
+    def save(self, path: str) -> None:
+        """save saves the state dict of the policy network."""
+        torch.save(self.__policy.state_dict(), path)

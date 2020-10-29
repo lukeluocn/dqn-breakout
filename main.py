@@ -33,8 +33,9 @@ rand.seed(GLOBAL_SEED)
 new_seed = lambda: rand.randint(0, 1000_000)
 os.mkdir(SAVE_PREFIX)
 
+torch.manual_seed(new_seed())
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-env = MyEnv(device, new_seed())
+env = MyEnv(device)
 agent = Agent(
     env.get_action_dim(),
     device,

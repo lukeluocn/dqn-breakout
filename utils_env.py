@@ -7,7 +7,6 @@ from typing import (
 import base64
 from collections import deque
 import pathlib
-import random
 
 from IPython import display as ipydisplay
 import numpy as np
@@ -33,18 +32,13 @@ HTML_TEMPLATE = """<video alt="{alt}" autoplay loop controls style="height: 400p
 
 class MyEnv(object):
 
-    def __init__(self, device: TorchDevice, seed: Optional[int] = None) -> None:
-        """A seed can be provided to make the environment deterministic."""
+    def __init__(self, device: TorchDevice) -> None:
         env_raw = make_atari("BreakoutNoFrameskip-v4")
         self.__env_train = wrap_deepmind(env_raw, episode_life=True)
         env_raw = make_atari("BreakoutNoFrameskip-v4")
         self.__env_eval = wrap_deepmind(env_raw, episode_life=True)
         self.__env = self.__env_train
         self.__device = device
-        self.__rand = random.Random()
-        if seed is not None:
-            self.__rand.seed(seed)
-        self.__new_seed = lambda: self.__rand.randint(0, 1000_000)
 
     def reset(
             self,
@@ -52,9 +46,6 @@ class MyEnv(object):
     ) -> Tuple[List[TensorObs], float, List[GymImg]]:
         """reset resets and initializes the underlying gym environment."""
         self.__env.reset()
-        # FIXME: seems like the wrapper is not compatible with the seed
-        # self.__env.seed(self.__new_seed())
-
         init_reward = 0.
         observations = []
         frames = []

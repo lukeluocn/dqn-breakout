@@ -3,4 +3,5 @@
 __pycache__
 eval_*/
 models/
+saved_models/
 rewards*.txt

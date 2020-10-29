@@ -124,6 +124,7 @@ class MyEnv(object):
             obs_queue: deque,
             agent: Agent,
             num_episode: int = 3,
+            render: bool = False,
     ) -> Tuple[
         float,
         List[GymImg],
@@ -133,10 +134,11 @@ class MyEnv(object):
         ep_rewards = []
         frames = []
         for _ in range(self.get_eval_lives() * num_episode):
-            observations, ep_reward, _frames = self.reset(render=True)
+            observations, ep_reward, _frames = self.reset(render=render)
             for obs in observations:
                 obs_queue.append(obs)
-            frames.extend(_frames)
+            if render:
+                frames.extend(_frames)
             done = False
 
             while not done:
@@ -146,7 +148,8 @@ class MyEnv(object):
 
                 ep_reward += reward
                 obs_queue.append(obs)
-                frames.append(self.get_frame())
+                if render:
+                    frames.append(self.get_frame())
 
             ep_rewards.append(ep_reward)
 

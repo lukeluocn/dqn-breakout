@@ -36,7 +36,10 @@ class MyEnv(object):
     def __init__(self, device: TorchDevice, seed: Optional[int] = None) -> None:
         """A seed can be provided to make the environment deterministic."""
         env_raw = make_atari("BreakoutNoFrameskip-v4")
-        self.__env = wrap_deepmind(env_raw, episode_life=True)
+        self.__env_train = wrap_deepmind(env_raw, episode_life=True)
+        env_raw = make_atari("BreakoutNoFrameskip-v4")
+        self.__env_eval = wrap_deepmind(env_raw, episode_life=True)
+        self.__env = self.__env_train
         self.__device = device
         self.__rand = random.Random()
         if seed is not None:
@@ -131,6 +134,7 @@ class MyEnv(object):
     ]:
         """evaluate uses the given agent to run the game for a few episodes and
         returns the average reward and the captured frames."""
+        self.__env = self.__env_eval
         ep_rewards = []
         frames = []
         for _ in range(self.get_eval_lives() * num_episode):
@@ -153,4 +157,5 @@ class MyEnv(object):
 
             ep_rewards.append(ep_reward)
 
+        self.__env = self.__env_train
         return np.sum(ep_rewards) / num_episode, frames

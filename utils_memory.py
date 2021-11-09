@@ -48,8 +48,9 @@ class ReplayMemory(object):
         self.__m_rewards[self.__pos, 0] = reward
         self.__m_dones[self.__pos, 0] = done
 
-        self.__pos = (self.__pos + 1) % self.__capacity
+        self.__pos += 1
         self.__size = max(self.__size, self.__pos)
+        self.__pos %= self.__capacity
 
     def sample(self, batch_size: int) -> Tuple[
             BatchState,

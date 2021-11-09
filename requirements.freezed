@@ -45,6 +45,7 @@ gym==0.17.3
 h5py==2.10.0
 HeapDict==1.0.1
 idna==2.9
+imagecodecs==2021.8.26
 imagecodecs-lite==2019.12.3
 imageio==2.8.0
 importlib-metadata==1.6.0
@@ -93,8 +94,8 @@ numexpr==2.7.1
 numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1588605083040/work
 oauthlib==3.0.1
 olefile==0.46
-opencv-python==4.4.0.44
-opt-einsum==0+untagged.56.g2664021.dirty
+opencv-python==4.4.0.46
+opt-einsum==3.3.0
 packaging==20.1
 pamela==1.0.0
 pandas==1.0.3
@@ -116,6 +117,7 @@ pyasn1-modules==0.2.7
 pycosat==0.6.3
 pycparser==2.20
 pycurl==7.43.0.5
+pygame==2.0.0
 pyglet==1.5.0
 Pygments==2.6.1
 PyJWT==1.7.1
@@ -151,17 +153,17 @@ SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/sqlalchemy_158942
 statsmodels==0.11.1
 sympy==1.5.1
 tblib==1.6.0
-tensorboard==2.1.1
-tensorflow==2.1.0
-tensorflow-estimator==2.1.0
+tensorboard==1.15.0
+tensorflow-estimator==1.15.1
+tensorflow-gpu==1.15.0
 termcolor==1.1.0
 terminado==0.8.3
 testpath==0.4.4
 threadpoolctl==2.0.0
 tifffile @ file:///home/conda/feedstock_root/build_artifacts/tifffile_1589323165428/work
 toolz==0.10.0
-torch==1.4.0
-torchvision==0.5.0
+torch==1.8.1
+torchvision==0.9.1+cu102
 tornado==6.0.4
 tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1588513834538/work
 traitlets==4.3.3

@@ -22,17 +22,19 @@ class ReplayMemory(object):
             channels: int,
             capacity: int,
             device: TorchDevice,
+            full_sink: bool = True,
     ) -> None:
         self.__device = device
         self.__capacity = capacity
         self.__size = 0
         self.__pos = 0
 
-        self.__m_states = torch.zeros(
-            (capacity, channels, 84, 84), dtype=torch.uint8)
-        self.__m_actions = torch.zeros((capacity, 1), dtype=torch.long)
-        self.__m_rewards = torch.zeros((capacity, 1), dtype=torch.int8)
-        self.__m_dones = torch.zeros((capacity, 1), dtype=torch.bool)
+        sink = lambda x: x.to(device) if full_sink else x
+        self.__m_states = sink(torch.zeros(
+            (capacity, channels, 84, 84), dtype=torch.uint8))
+        self.__m_actions = sink(torch.zeros((capacity, 1), dtype=torch.long))
+        self.__m_rewards = sink(torch.zeros((capacity, 1), dtype=torch.int8))
+        self.__m_dones = sink(torch.zeros((capacity, 1), dtype=torch.bool))
 
     def push(
             self,

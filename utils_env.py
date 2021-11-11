@@ -138,7 +138,7 @@ class MyEnv(object):
 
             while not done:
                 state = self.make_state(obs_queue).to(self.__device).float()
-                action = agent.run(state)
+                action = agent.run(state, testing=True)
                 obs, reward, done = self.step(action)
 
                 ep_reward += reward

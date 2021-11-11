@@ -58,14 +58,14 @@ class Agent(object):
         )
         self.__target.eval()
 
-    def run(self, state: TensorStack4, training: bool = False) -> int:
+    def run(self, state: TensorStack4, training: bool = False, testing: bool = False) -> int:
         """run suggests an action for the given state."""
         if training:
             self.__eps -= \
                 (self.__eps_start - self.__eps_final) / self.__eps_decay
             self.__eps = max(self.__eps, self.__eps_final)
 
-        if self.__r.random() > self.__eps:
+        if testing or self.__r.random() > self.__eps:
             with torch.no_grad():
                 return self.__policy(state).max(1).indices.item()
         return self.__r.randint(0, self.__action_dim - 1)

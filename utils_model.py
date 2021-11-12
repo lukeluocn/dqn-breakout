@@ -29,3 +29,20 @@ class DQN(nn.Module):
             module.bias.data.fill_(0.0)
         elif isinstance(module, nn.Conv2d):
             torch.nn.init.kaiming_normal_(module.weight, nonlinearity="relu")
+
+class DuelingDQN(nn.Module):
+
+    def __init__(self, action_dim, device):
+        super(DuelingDQN, self).__init__()
+        pass
+
+    def forward(self, x):
+        pass
+
+    @staticmethod
+    def init_weights(module):
+        if isinstance(module, nn.Linear):
+            torch.nn.init.kaiming_normal_(module.weight, nonlinearity="relu")
+            module.bias.data.fill_(0.0)
+        elif isinstance(module, nn.Conv2d):
+            torch.nn.init.kaiming_normal_(module.weight, nonlinearity="relu")

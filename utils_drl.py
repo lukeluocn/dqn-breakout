@@ -14,7 +14,7 @@ from utils_types import (
 )
 
 from utils_memory import ReplayMemory
-from utils_model import DQN, DuelingDQN
+from utils_model import DQN
 
 
 class Agent(object):
@@ -48,16 +48,11 @@ class Agent(object):
         if rlmodel is None or rlmodel == 'DQN':
             self.__policy = DQN(action_dim, device).to(device)
             self.__target = DQN(action_dim, device).to(device)
-        elif rlmodel == 'DuelingDQN':
-            self.__policy = DuelingDQN(action_dim, device).to(device)
-            self.__target = DuelingDQN(action_dim, device).to(device)
         else:
             exit(0)
         if restore is None:
             if rlmodel is None or rlmodel == 'DQN':
                 self.__policy.apply(DQN.init_weights)
-            elif rlmodel == 'DuelingDQN':
-                self.__policy.apply(DuelingDQN.init_weights)
         else:
             self.__policy.load_state_dict(torch.load(restore))
         self.__target.load_state_dict(self.__policy.state_dict())

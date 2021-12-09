@@ -14,12 +14,8 @@ from multiprocessing import cpu_count
 
 # Argument Parse
 args = arg_parse()
-rlmodel = None
-if args.rlmodel != 'None':
-    rlmodel = args.rlmodel
-restore = None
-if args.restore != 'None':
-    restore = args.restore
+rlmodel = None if args.rlmodel == "None" else args.rlmodel
+restore = None if args.restore == "None" else args.restore
 
 GAMMA = 0.99
 GLOBAL_SEED = 0
@@ -30,8 +26,8 @@ REWARD_PATH = os.path.join(SAVE_PREFIX, "rewards.txt")
 STACK_SIZE = 4
 
 EPS_START = args.epsStart
-EPS_END = 0.1
-EPS_DECAY = 1000000
+EPS_END = args.epsEnd
+EPS_DECAY = args.epsDecay
 
 BATCH_SIZE = 32
 POLICY_UPDATE = 4
@@ -47,13 +43,7 @@ if not os.path.exists(SAVE_PREFIX):
     os.mkdir(SAVE_PREFIX)
 
 torch.manual_seed(new_seed())
-
-cpu_num = cpu_count()
-os.environ ['OMP_NUM_THREADS'] = str(cpu_num)
-os.environ ['OPENBLAS_NUM_THREADS'] = str(cpu_num)
-os.environ ['MKL_NUM_THREADS'] = str(cpu_num)
-os.environ ['VECLIB_MAXIMUM_THREADS'] = str(cpu_num)
-os.environ ['NUMEXPR_NUM_THREADS'] = str(cpu_num)
+# The number of threads here needs to be adjusted based on the number of CPU cores available. 
 torch.set_num_threads(4)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 env = MyEnv(device)

@@ -9,12 +9,12 @@ if [ -d models ]; then
 fi
 rm -r eval_*
 
-savePrefix='./models/natural'
+savePrefix="./models/natural"
 epsStart=1
-epsEnd = 0.1
-epsDecay = 1000000
-rlmodel='DQN'
-restore='None'
+epsEnd=0.1
+epsDecay=1000000
+rlmodel="DQN"
+restore="None"
 
 if [ -z ${CUDA_VISIBLE_DEVICES} ]; then
     export CUDA_VISIBLE_DEVICES="0"
@@ -26,4 +26,4 @@ python main.py \
     --epsEnd ${epsEnd} \
     --epsDecay ${epsDecay} \
     --rlmodel ${rlmodel} \
-    --restore ${restore} \
+    --restore ${restore}

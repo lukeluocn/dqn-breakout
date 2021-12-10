@@ -1,9 +1,9 @@
-savePrefix='./models/pretrain'
+savePrefix="./models/pretrain"
 epsStart=0.1
-epsEnd = 0.1
-epsDecay = 1000000
-rlmodel='DQN'
-restore='./model_weights_a'
+epsEnd=0.1
+epsDecay=1000000
+rlmodel="DQN"
+restore="./model_weights_a"
 
 if [ -z ${CUDA_VISIBLE_DEVICES} ]; then
     export CUDA_VISIBLE_DEVICES="0"
@@ -15,4 +15,4 @@ python main.py \
     --epsEnd ${epsEnd} \
     --epsDecay ${epsDecay} \
     --rlmodel ${rlmodel} \
-    --restore ${restore} \
+    --restore ${restore}

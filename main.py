@@ -10,11 +10,9 @@ from utils_env import MyEnv
 from utils_memory import ReplayMemory
 
 from config import arg_parse
-from multiprocessing import cpu_count
 
 # Argument Parse
 args = arg_parse()
-rlmodel = None if args.rlmodel == "None" else args.rlmodel
 restore = None if args.restore == "None" else args.restore
 
 GAMMA = 0.99
@@ -43,7 +41,7 @@ if not os.path.exists(SAVE_PREFIX):
     os.mkdir(SAVE_PREFIX)
 
 torch.manual_seed(new_seed())
-# The number of threads here needs to be adjusted based on the number of CPU cores available. 
+# The number of threads here needs to be adjusted based on the number of CPU cores available
 torch.set_num_threads(4)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 env = MyEnv(device)
